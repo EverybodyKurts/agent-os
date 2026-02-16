@@ -233,7 +233,7 @@ These standards cover:
 
 ### Step 6: Surface Related Skills (Conversation scenario only)
 
-When in conversation scenario, check if `.claude/skills/` exists and contains related skills:
+When in conversation scenario, check if `.github/skills/` exists and contains related skills:
 
 ```
 Related Skills you might want to use:
