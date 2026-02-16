@@ -1,10 +1,7 @@
-# GitHub Copilot Agent Skill
-
-This is a GitHub Copilot agent skill for Agent OS. For more information about GitHub Copilot agent skills, see:
-https://docs.github.com/en/copilot/concepts/agents/about-agent-skills
-
 ---
-
+name: inject-standards
+description: Inject relevant standards into the current context based on what you're working on. Use this when implementing code to ensure adherence to project patterns and conventions.
+---
 # Inject Standards
 
 Inject relevant standards into the current context, formatted appropriately for the situation.

@@ -1,10 +1,7 @@
-# GitHub Copilot Agent Skill
-
-This is a GitHub Copilot agent skill for Agent OS. For more information about GitHub Copilot agent skills, see:
-https://docs.github.com/en/copilot/concepts/agents/about-agent-skills
-
 ---
-
+name: index-standards
+description: Rebuild and maintain the standards index file (index.yml) to enable quick discovery of relevant standards. Use this after creating or modifying standards files.
+---
 # Index Standards
 
 Rebuild and maintain the standards index file (`index.yml`).

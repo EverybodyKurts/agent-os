@@ -448,25 +448,28 @@ install_commands() {
                 
             github-copilot)
                 local commands_source="$BASE_DIR/commands/github-copilot"
-                local commands_dest="$PROJECT_DIR/.github/copilot/agent-os"
+                local commands_dest="$PROJECT_DIR/.github/skills"
                 
                 if [[ ! -d "$commands_source" ]]; then
-                    print_warning "No GitHub Copilot commands found in base installation"
+                    print_warning "No GitHub Copilot skills found in base installation"
                     continue
                 fi
                 
                 ensure_dir "$commands_dest"
                 
                 local count=0
-                for file in "$commands_source"/*.md; do
-                    if [[ -f "$file" ]]; then
-                        cp "$file" "$commands_dest/"
+                # Copy each skill directory
+                for skill_dir in "$commands_source"/*; do
+                    if [[ -d "$skill_dir" ]]; then
+                        local skill_name=$(basename "$skill_dir")
+                        # Copy the entire skill directory
+                        cp -r "$skill_dir" "$commands_dest/"
                         count=$((count + 1))
                     fi
                 done
                 
                 if [[ "$count" -gt 0 ]]; then
-                    print_success "Installed $count GitHub Copilot agent skills to .github/copilot/agent-os/"
+                    print_success "Installed $count GitHub Copilot skills to .github/skills/"
                     installed_count=$((installed_count + count))
                 fi
                 ;;

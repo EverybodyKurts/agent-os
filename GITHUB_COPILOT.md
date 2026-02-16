@@ -51,12 +51,12 @@ Install directly with the `--agents` flag:
 Agent OS provides the following GitHub Copilot agent skills:
 
 ### 1. Discover Standards
-**Location:** `.github/copilot/agent-os/discover-standards.md`
+**Location:** `.github/skills/discover-standards/SKILL.md`
 
 Extract tribal knowledge from your codebase into concise, documented standards. This skill helps identify patterns, conventions, and best practices that should be captured as reusable standards.
 
 ### 2. Inject Standards
-**Location:** `.github/copilot/agent-os/inject-standards.md`
+**Location:** `.github/skills/inject-standards/SKILL.md`
 
 Intelligently inject relevant standards into your current context. Supports:
 - Auto-suggestion based on current work
@@ -64,28 +64,40 @@ Intelligently inject relevant standards into your current context. Supports:
 - Integration with conversations, skills, and plans
 
 ### 3. Index Standards
-**Location:** `.github/copilot/agent-os/index-standards.md`
+**Location:** `.github/skills/index-standards/SKILL.md`
 
 Rebuild and maintain the standards index file (`index.yml`) for quick discovery and matching.
 
 ### 4. Shape Spec
-**Location:** `.github/copilot/agent-os/shape-spec.md`
+**Location:** `.github/skills/shape-spec/SKILL.md`
 
 Gather context and structure planning for significant work. Works in plan mode to create well-scoped and strategized plans.
 
 ### 5. Plan Product
-**Location:** `.github/copilot/agent-os/plan-product.md`
+**Location:** `.github/skills/plan-product/SKILL.md`
 
 Establish foundational product documentation through an interactive conversation. Creates mission, roadmap, and tech stack files.
 
 ## Using GitHub Copilot Skills
+
+### In GitHub Copilot CLI
+
+Skills are automatically available when you use GitHub Copilot CLI:
+
+```bash
+# List available skills
+gh copilot skills list
+
+# Use a specific skill
+Use the /discover-standards skill to identify patterns in src/api/
+```
 
 ### In GitHub Copilot Chat
 
 Reference skills directly in your conversation:
 
 ```
-@github Use the discover-standards skill to identify API patterns in src/api/
+@github Use the /discover-standards skill to identify API patterns in src/api/
 ```
 
 ### In Workflow Files
@@ -109,14 +121,22 @@ When installed, GitHub Copilot agent skills are placed in:
 
 ```
 .github/
-└── copilot/
-    └── agent-os/
-        ├── discover-standards.md
-        ├── inject-standards.md
-        ├── index-standards.md
-        ├── plan-product.md
-        └── shape-spec.md
+└── skills/
+    ├── discover-standards/
+    │   └── SKILL.md
+    ├── inject-standards/
+    │   └── SKILL.md
+    ├── index-standards/
+    │   └── SKILL.md
+    ├── plan-product/
+    │   └── SKILL.md
+    └── shape-spec/
+        └── SKILL.md
 ```
+
+Each skill is in its own directory with a `SKILL.md` file that contains:
+- YAML frontmatter with `name` and `description`
+- Detailed instructions for GitHub Copilot to follow
 
 ## Standards Directory
 
@@ -138,10 +158,12 @@ While the core functionality is the same, there are some differences in how skil
 
 | Feature | Claude Code | GitHub Copilot |
 |---------|-------------|----------------|
-| Command prefix | `/` | `@github` |
-| Location | `.claude/commands/` | `.github/copilot/` |
+| Command prefix | `/` | `/` (in CLI) |
+| Location | `.claude/commands/` | `.github/skills/` |
+| File name | `command-name.md` | `SKILL.md` |
+| Structure | Single file | Directory with SKILL.md |
+| Frontmatter | Not required | YAML with name & description |
 | Sub-agents | Claude sub-agents | GitHub Copilot sub-agents |
-| Skills format | Markdown commands | Agent skills |
 
 ## Benefits of GitHub Copilot Integration
 
