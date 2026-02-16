@@ -1,6 +1,14 @@
 version: 3.0
 default_profile: default
 
+# AI Agent Configuration
+# Specify which AI agent(s) to use: claude, github-copilot, or both
+# Default: claude (for backward compatibility)
+ai_agents:
+  - claude
+# To add GitHub Copilot support, uncomment the line below:
+# - github-copilot
+
 # Optional: define inheritance relationships for profiles
 # Profiles not listed here still work, they just have no inheritance
 # profiles:
