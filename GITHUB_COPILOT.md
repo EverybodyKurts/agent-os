@@ -94,10 +94,20 @@ Use the /discover-standards skill to identify patterns in src/api/
 
 ### In GitHub Copilot Chat
 
-Reference skills directly in your conversation:
+Reference skills directly in your chat conversation:
 
 ```
 @github Use the /discover-standards skill to identify API patterns in src/api/
+```
+
+### In GitHub Copilot CLI
+
+Skills are automatically loaded and can be invoked with the skill name:
+
+```bash
+# Skills will be available based on context
+# GitHub Copilot will suggest relevant skills automatically
+Use /discover-standards to identify patterns in src/api/
 ```
 
 ### In Workflow Files
@@ -109,7 +119,7 @@ Skills can be referenced in GitHub Actions or other CI/CD workflows that support
 GitHub Copilot skills support sub-agents for parallel execution:
 
 ```
-@github Use discover-standards skill with sub-agents to analyze:
+Use the discover-standards skill with sub-agents to analyze:
 1. API patterns in src/api/
 2. Database patterns in src/models/
 3. UI patterns in src/components/
