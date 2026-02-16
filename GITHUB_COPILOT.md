@@ -100,16 +100,6 @@ Reference skills directly in your chat conversation:
 @github Use the /discover-standards skill to identify API patterns in src/api/
 ```
 
-### In GitHub Copilot CLI
-
-Skills are automatically loaded and can be invoked with the skill name:
-
-```bash
-# Skills will be available based on context
-# GitHub Copilot will suggest relevant skills automatically
-Use /discover-standards to identify patterns in src/api/
-```
-
 ### In Workflow Files
 
 Skills can be referenced in GitHub Actions or other CI/CD workflows that support GitHub Copilot integration.
