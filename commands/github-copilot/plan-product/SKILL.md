@@ -1,10 +1,7 @@
-# GitHub Copilot Agent Skill
-
-This is a GitHub Copilot agent skill for Agent OS. For more information about GitHub Copilot agent skills, see:
-https://docs.github.com/en/copilot/concepts/agents/about-agent-skills
-
 ---
-
+name: plan-product
+description: Establish foundational product documentation including mission, roadmap, and tech stack. Use this when starting a new project or formalizing product direction.
+---
 # Plan Product
 
 Establish foundational product documentation through an interactive conversation. Creates mission, roadmap, and tech stack files in `agent-os/product/`.

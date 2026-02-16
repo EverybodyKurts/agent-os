@@ -1,10 +1,7 @@
-# GitHub Copilot Agent Skill
-
-This is a GitHub Copilot agent skill for Agent OS. For more information about GitHub Copilot agent skills, see:
-https://docs.github.com/en/copilot/concepts/agents/about-agent-skills
-
 ---
-
+name: shape-spec
+description: Gather context and structure planning for significant work in plan mode. Use this to create well-scoped plans that consider standards and product mission.
+---
 # Shape Spec
 
 Gather context and structure planning for significant work. **Run this command while in plan mode.**

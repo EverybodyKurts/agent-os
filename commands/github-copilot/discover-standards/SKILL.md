@@ -1,8 +1,6 @@
-# GitHub Copilot Agent Skill
-
-This is a GitHub Copilot agent skill for Agent OS. For more information about GitHub Copilot agent skills, see:
-https://docs.github.com/en/copilot/concepts/agents/about-agent-skills
-
+---
+name: discover-standards
+description: Extract tribal knowledge and patterns from your codebase into concise, documented standards. Use this when asked to identify or document coding patterns, conventions, and best practices from the codebase.
 ---
 
 # Discover Standards
@@ -10,14 +8,6 @@ https://docs.github.com/en/copilot/concepts/agents/about-agent-skills
 Extract tribal knowledge from your codebase into concise, documented standards.
 
 This skill helps you identify and document patterns, conventions, and tribal knowledge from your codebase that should be captured as standards.
-
-## GitHub Copilot Skills Integration
-
-This skill leverages GitHub Copilot's ability to:
-- Analyze codebases across multiple files
-- Identify patterns and conventions
-- Ask clarifying questions using interactive prompts
-- Create and organize documentation files
 
 ## Important Guidelines
 
@@ -218,5 +208,3 @@ When processing large codebases or complex analysis, consider using GitHub Copil
 - Analyze different areas of the codebase in parallel
 - Deep-dive into specific patterns or conventions
 - Generate draft standards for review
-
-Refer to [GitHub Copilot Agent Skills documentation](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills) for more details on creating and using sub-agents.
