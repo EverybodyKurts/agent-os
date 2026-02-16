@@ -4,7 +4,7 @@
 
 [Agent OS](https://buildermethods.com/agent-os) helps you shape better specs, keeps agents aligned in a lightweight system that fits how you already build.
 
-Works alongside Claude Code, Cursor, Antigravity, and other AI tools. Any language, any framework.
+Works alongside **Claude Code**, **GitHub Copilot**, **Cursor**, **Antigravity**, and other AI tools. Any language, any framework.
 
 **Core capabilities:**
 
@@ -12,6 +12,36 @@ Works alongside Claude Code, Cursor, Antigravity, and other AI tools. Any langua
 - **Deploy Standards** — Intelligently inject relevant standards based on what you're building
 - **Shape Spec** — Create better plans that lead to better builds
 - **Index Standards** — Keep your standards organized and discoverable
+
+---
+
+### AI Agent Support
+
+Agent OS now supports multiple AI agents:
+- **Claude Code** — Commands installed to `.claude/commands/agent-os/`
+- **GitHub Copilot** — Agent skills installed to `.github/copilot/agent-os/`
+
+You can configure your preferred AI agent(s) in `config.yml`:
+
+```yaml
+ai_agents:
+  - claude          # For Claude Code support
+  # - github-copilot  # Uncomment for GitHub Copilot support
+```
+
+Or specify during installation:
+```bash
+# Install for Claude only (default)
+./scripts/project-install.sh --agents claude
+
+# Install for GitHub Copilot only
+./scripts/project-install.sh --agents github-copilot
+
+# Install for both agents
+./scripts/project-install.sh --agents claude,github-copilot
+```
+
+**GitHub Copilot Integration:** Agent OS commands are provided as GitHub Copilot agent skills, leveraging the [GitHub Copilot Skills framework](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills) for enhanced AI-assisted development with support for sub-agents and parallel task execution.
 
 ---
 
