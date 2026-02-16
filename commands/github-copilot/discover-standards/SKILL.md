@@ -267,20 +267,20 @@ When processing large codebases or when the user wants comprehensive analysis:
 Here's what a successful session should look like:
 
 1. **User:** "Discover standards in my codebase"
-2. **Agent:** Analyzes codebase, identifies 5 areas (API, Backend, Frontend, Database, Testing)
-3. **Agent:** Asks user which area to start with
+2. **GitHub Copilot:** Analyzes codebase, identifies 5 areas (API, Backend, Frontend, Database, Testing)
+3. **GitHub Copilot:** Asks user which area to start with
 4. **User:** "Let's start with API"
-5. **Agent:** Analyzes API code, finds 8 potential standards, asks user which to document
+5. **GitHub Copilot:** Analyzes API code, finds 8 potential standards, asks user which to document
 6. **User:** "All of them"
-7. **Agent:** For each standard:
+7. **GitHub Copilot:** For each standard:
    - Asks why questions
    - Drafts standard
    - Asks for confirmation
    - Creates file in `agent-os/standards/api/[standard-name].md`
-8. **Agent:** Updates `agent-os/standards/index.yml` with all 8 standards
-9. **Agent:** "Created 8 API standards. Continue with another area?"
+8. **GitHub Copilot:** Updates `agent-os/standards/index.yml` with all 8 standards
+9. **GitHub Copilot:** "Created 8 API standards. Continue with another area?"
 10. **User:** "Yes, do Backend next"
-11. **Agent:** Repeats process for Backend area
+11. **GitHub Copilot:** Repeats process for Backend area
 12. ... continues until user is satisfied
 
 **Final result:** 20-30+ standards organized across multiple folders (api/, backend/, frontend/, database/, testing/) with a complete index.yml file.
