@@ -273,7 +273,7 @@ install_standards() {
         done < <(find "$profile_standards" -name "*.md" -type f ! -path "*/.backups/*" -print0 2>/dev/null)
 
         if [[ "$profile_file_count" -gt 0 ]]; then
-            ((profiles_used++))
+            profiles_used=$((profiles_used + 1))
         fi
     done <<< "$INHERITANCE_CHAIN"
 
@@ -367,7 +367,7 @@ create_index() {
             fi
             echo "  $filename:" >> "$temp_file"
             echo "    description: $desc" >> "$temp_file"
-            ((entry_count++))
+            entry_count=$((entry_count + 1))
         done <<< "$root_files"
         echo "" >> "$temp_file"
     fi
@@ -389,7 +389,7 @@ create_index() {
                 fi
                 echo "  $filename:" >> "$temp_file"
                 echo "    description: $desc" >> "$temp_file"
-                ((entry_count++))
+                entry_count=$((entry_count + 1))
             done <<< "$md_files"
             echo "" >> "$temp_file"
         fi
@@ -436,13 +436,13 @@ install_commands() {
                 for file in "$commands_source"/*.md; do
                     if [[ -f "$file" ]]; then
                         cp "$file" "$commands_dest/"
-                        ((count++))
+                        count=$((count + 1))
                     fi
                 done
                 
                 if [[ "$count" -gt 0 ]]; then
                     print_success "Installed $count Claude commands to .claude/commands/agent-os/"
-                    ((installed_count+=count))
+                    installed_count=$((installed_count + count))
                 fi
                 ;;
                 
@@ -461,13 +461,13 @@ install_commands() {
                 for file in "$commands_source"/*.md; do
                     if [[ -f "$file" ]]; then
                         cp "$file" "$commands_dest/"
-                        ((count++))
+                        count=$((count + 1))
                     fi
                 done
                 
                 if [[ "$count" -gt 0 ]]; then
                     print_success "Installed $count GitHub Copilot agent skills to .github/copilot/agent-os/"
-                    ((installed_count+=count))
+                    installed_count=$((installed_count + count))
                 fi
                 ;;
         esac
@@ -515,7 +515,7 @@ main() {
             done
             chain_display="$chain_display"$'\n'"$indent  ↳ inherits from: $profile_name"
         fi
-        ((chain_depth++))
+        chain_depth=$((chain_depth + 1))
     done <<< "$reversed_chain"
     echo "$chain_display"
 
