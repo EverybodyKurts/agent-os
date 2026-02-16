@@ -519,7 +519,7 @@ main() {
     done <<< "$reversed_chain"
     echo "$chain_display"
 
-    echo "  AI Agents: $EFFECTIVE_AGENTS"
+    echo "  AI agents: $EFFECTIVE_AGENTS"
     echo "  Commands only: $COMMANDS_ONLY"
 
     # Confirm overwrite if standards folder exists
