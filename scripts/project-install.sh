@@ -22,6 +22,7 @@ source "$SCRIPT_DIR/common-functions.sh"
 VERBOSE="false"
 PROFILE=""
 COMMANDS_ONLY="false"
+AGENTS=""  # Comma-separated list of agents (claude, github-copilot, or both)
 
 # -----------------------------------------------------------------------------
 # Help Function
@@ -35,6 +36,8 @@ Install Agent OS into the current project directory.
 
 Options:
     --profile <name>     Use specified profile (default: from config.yml)
+    --agents <list>      Comma-separated list of agents to install: claude, github-copilot, or both
+                         (default: from config.yml or claude if not specified)
     --commands-only      Only update commands, preserve existing standards
     --verbose            Show detailed output
     -h, --help           Show this help message
@@ -42,6 +45,8 @@ Options:
 Examples:
     $0
     $0 --profile rails
+    $0 --agents claude,github-copilot
+    $0 --agents github-copilot
     $0 --commands-only
 
 EOF
@@ -57,6 +62,10 @@ parse_arguments() {
         case $1 in
             --profile)
                 PROFILE="$2"
+                shift 2
+                ;;
+            --agents)
+                AGENTS="$2"
                 shift 2
                 ;;
             --commands-only)
@@ -123,6 +132,25 @@ load_configuration() {
         print_error "Profile not found: $EFFECTIVE_PROFILE"
         exit 1
     fi
+
+    # Get AI agents configuration
+    local default_agents="claude"
+    local config_agents=$(get_yaml_agents "$config_file" "$default_agents")
+    
+    # Use command line agents or config default
+    EFFECTIVE_AGENTS="${AGENTS:-$config_agents}"
+    
+    # Validate agents
+    IFS=',' read -ra AGENT_ARRAY <<< "$EFFECTIVE_AGENTS"
+    for agent in "${AGENT_ARRAY[@]}"; do
+        agent=$(echo "$agent" | xargs)  # Trim whitespace
+        if [[ "$agent" != "claude" && "$agent" != "github-copilot" ]]; then
+            print_error "Invalid agent: $agent"
+            echo ""
+            echo "Valid agents are: claude, github-copilot"
+            exit 1
+        fi
+    done
 
     # Build inheritance chain
     local chain_result=$(get_profile_inheritance_chain "$config_file" "$EFFECTIVE_PROFILE" "$BASE_DIR/profiles")
@@ -385,28 +413,68 @@ install_commands() {
     echo ""
     print_status "Installing commands..."
 
-    local commands_source="$BASE_DIR/commands/agent-os"
-    local commands_dest="$PROJECT_DIR/.claude/commands/agent-os"
-
-    if [[ ! -d "$commands_source" ]]; then
-        print_warning "No commands found in base installation"
-        return
-    fi
-
-    ensure_dir "$commands_dest"
-
-    local count=0
-    for file in "$commands_source"/*.md; do
-        if [[ -f "$file" ]]; then
-            cp "$file" "$commands_dest/"
-            ((count++))
-        fi
+    local installed_count=0
+    
+    # Install commands for each agent
+    IFS=',' read -ra AGENT_ARRAY <<< "$EFFECTIVE_AGENTS"
+    for agent in "${AGENT_ARRAY[@]}"; do
+        agent=$(echo "$agent" | xargs)  # Trim whitespace
+        
+        case "$agent" in
+            claude)
+                local commands_source="$BASE_DIR/commands/agent-os"
+                local commands_dest="$PROJECT_DIR/.claude/commands/agent-os"
+                
+                if [[ ! -d "$commands_source" ]]; then
+                    print_warning "No Claude commands found in base installation"
+                    continue
+                fi
+                
+                ensure_dir "$commands_dest"
+                
+                local count=0
+                for file in "$commands_source"/*.md; do
+                    if [[ -f "$file" ]]; then
+                        cp "$file" "$commands_dest/"
+                        ((count++))
+                    fi
+                done
+                
+                if [[ "$count" -gt 0 ]]; then
+                    print_success "Installed $count Claude commands to .claude/commands/agent-os/"
+                    ((installed_count+=count))
+                fi
+                ;;
+                
+            github-copilot)
+                local commands_source="$BASE_DIR/commands/github-copilot"
+                local commands_dest="$PROJECT_DIR/.github/copilot/agent-os"
+                
+                if [[ ! -d "$commands_source" ]]; then
+                    print_warning "No GitHub Copilot commands found in base installation"
+                    continue
+                fi
+                
+                ensure_dir "$commands_dest"
+                
+                local count=0
+                for file in "$commands_source"/*.md; do
+                    if [[ -f "$file" ]]; then
+                        cp "$file" "$commands_dest/"
+                        ((count++))
+                    fi
+                done
+                
+                if [[ "$count" -gt 0 ]]; then
+                    print_success "Installed $count GitHub Copilot agent skills to .github/copilot/agent-os/"
+                    ((installed_count+=count))
+                fi
+                ;;
+        esac
     done
-
-    if [[ "$count" -gt 0 ]]; then
-        print_success "Installed $count commands to .claude/commands/agent-os/"
-    else
-        print_warning "No command files found"
+    
+    if [[ "$installed_count" -eq 0 ]]; then
+        print_warning "No command files found for any agent"
     fi
 }
 
@@ -451,6 +519,7 @@ main() {
     done <<< "$reversed_chain"
     echo "$chain_display"
 
+    echo "  AI Agents: $EFFECTIVE_AGENTS"
     echo "  Commands only: $COMMANDS_ONLY"
 
     # Confirm overwrite if standards folder exists

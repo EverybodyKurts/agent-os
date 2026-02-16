@@ -177,6 +177,36 @@ get_profile_inheritance_chain() {
     echo "$chain"
 }
 
+# Get AI agents list from YAML (returns comma-separated list)
+get_yaml_agents() {
+    local file=$1
+    local default=$2
+
+    if [[ ! -f "$file" ]]; then
+        echo "$default"
+        return
+    fi
+
+    # Use awk to extract agents from the ai_agents array
+    local agents=$(awk '
+        /^ai_agents:/ { in_agents=1; next }
+        /^[a-zA-Z]/ && !/^[[:space:]]/ { in_agents=0 }
+        in_agents && /^[[:space:]]*-[[:space:]]*/ {
+            gsub(/^[[:space:]]*-[[:space:]]*/, "")
+            gsub(/[[:space:]]*$/, "")
+            gsub(/#.*$/, "")  # Remove comments
+            gsub(/^[[:space:]]*/, "")
+            if (length($0) > 0) print $0
+        }
+    ' "$file" | paste -sd "," -)
+
+    if [[ -n "$agents" ]]; then
+        echo "$agents"
+    else
+        echo "$default"
+    fi
+}
+
 # -----------------------------------------------------------------------------
 # File Operations
 # -----------------------------------------------------------------------------
