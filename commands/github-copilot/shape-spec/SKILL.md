@@ -14,17 +14,19 @@ Gather context and structure planning for significant work. **Run this command w
 
 ## Prerequisites
 
-This command **must be run in plan mode**.
+This skill **must be run in plan mode**.
 
-**Before proceeding, check if you are currently in plan mode.**
+In GitHub Copilot CLI, plan mode is activated by pressing **Shift+Tab** before sending your message. When the skill is invoked in plan mode, GitHub Copilot automatically signals this through its execution context — you are already in plan mode.
 
-If NOT in plan mode, **stop immediately** and tell the user:
+**Do not ask the user to prefix their message with `[[PLAN]]` or any other prefix to signal plan mode.** GitHub Copilot CLI handles plan mode detection natively.
+
+If you are NOT in plan mode (i.e. the user invoked this skill outside of plan mode), **stop immediately** and tell the user:
 
 ```
-Shape-spec must be run in plan mode. Please enter plan mode first, then run /shape-spec again.
+Shape-spec must be run in plan mode. Please press Shift+Tab to enter plan mode, then run /shape-spec again.
 ```
 
-Do not proceed with any steps below until confirmed to be in plan mode.
+Do not proceed with any steps below unless you are in plan mode.
 
 ## Process
 
